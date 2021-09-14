@@ -1,23 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById("root"));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://cra.link/PWA
-serviceWorkerRegistration.unregister();
+serviceWorkerRegistration.register({
+  onUpdate: ({ waiting }) => {
+    if (waiting) {
+      waiting.postMessage({ type: "SKIP_WAITING" });
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+      waiting.addEventListener("statechange", (e) => {
+        if ((e.target as ServiceWorker).state === "activated") {
+          /**
+           * Here the app is ready to reaload and use the new Service Worker (new app version)
+           *
+           * When this happen, it's common to show something to inform the user and let him reload it if he want
+           */
+
+          window.location.reload();
+        }
+      });
+    }
+  },
+});
+
 reportWebVitals();
