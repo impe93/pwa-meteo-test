@@ -2,6 +2,7 @@ import "./App.css";
 
 import { fetchWeather, Weather } from "./api/fetchWeather";
 import { useCallback, useState } from "react";
+import { InstallPwaButton } from "./components/InstallPwaButton";
 
 const App = () => {
   const [query, setQuery] = useState<string>("");
@@ -31,11 +32,12 @@ const App = () => {
       <input
         type="text"
         className="search"
-        placeholder="Search deeper..."
+        placeholder="Search..."
         value={query}
         onChange={onInputChange}
         onKeyPress={search}
       />
+      <InstallPwaButton />
       {weather && (
         <div className="city">
           <h2 className="city-name">
