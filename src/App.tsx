@@ -3,10 +3,15 @@ import "./App.css";
 import { fetchWeather, Weather } from "./api/fetchWeather";
 import { useCallback, useState } from "react";
 import { InstallPwaButton } from "./components/InstallPwaButton";
+import { useOnlineStatus } from "./hooks/useOnlineStatus";
 
 const App = () => {
   const [query, setQuery] = useState<string>("");
   const [weather, setWeather] = useState<Weather | null>(null);
+
+  const isOnline = useOnlineStatus()
+
+  console.log('Is online', isOnline)
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
@@ -37,6 +42,7 @@ const App = () => {
         onChange={onInputChange}
         onKeyPress={search}
       />
+      {}
       <InstallPwaButton />
       {weather && (
         <div className="city">

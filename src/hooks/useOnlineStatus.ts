@@ -23,4 +23,6 @@ export const useOnlineStatus = () => {
       window.removeEventListener("offline", goOffline);
     };
   }, []);
+
+  return onlineStatus;
 };

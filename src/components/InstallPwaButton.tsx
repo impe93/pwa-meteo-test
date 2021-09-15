@@ -52,8 +52,6 @@ export const InstallPwaButton = () => {
     [promptInstall]
   );
 
-	console.log((window.navigator as any).standalone === true)
-
 	// Not show when is in standalone mode
   if (!supportsPWA || (window.navigator as any).standalone === true) {
     return null;
